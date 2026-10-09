@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leo Clemente — 3D motion designer</title>
+<meta name="description" content="Freelance 3D motion designer based in Paris. Social media content for brands — L'Oréal Paris, Decathlon, Aigle, Delpeyrat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08080a;
+    --ink:#f0eff0;
+    --muted:#8a898b;
+    --line:rgba(240,239,240,.16);
+    --faint:rgba(240,239,240,.3);
+    --accent:#2952ff;
+    --sans:'Inter',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    --gutter:clamp(22px,4vw,52px);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;letter-spacing:-.011em;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;
+    transition:background-color .7s ease,color .7s ease;
+  }
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 var(--gutter)}
+
+  .sep{
+    position:relative;z-index:3;
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:14px 0;border-top:1px solid var(--line);
+    font-size:.56rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+    color:var(--ink);
+    transition:border-color .7s ease,color .7s ease;
+  }
+  .sep span:last-child{color:var(--muted)}
+
+  /* ---------- Home ---------- */
+  .intro{
+    position:relative;
+    background:#08080a;color:#f4f3f4;
+    min-height:100svh;
+    display:flex;flex-direction:column;
+    padding:clamp(28px,4.5vh,46px) 0 clamp(18px,3vh,32px);
+    overflow:hidden;
+  }
+
+  /* bandeau de micro-informations : tous les textes secondaires vivent ici */
+  .hero-top{
+    display:grid;
+    grid-template-columns:auto auto minmax(0,1fr);
+    column-gap:clamp(18px,2.6vw,34px);
+    row-gap:16px;
+    align-items:start;
+    font-size:.56rem;font-weight:700;line-height:1.4;
+    letter-spacing:.02em;text-transform:uppercase;
+  }
+  .hero-top .tools{
+    width:auto;min-width:0;
+    margin:0;padding:0;list-style:none;
+    font-size:.52rem;font-weight:500;color:#b9b8ba;
+  }
+  .hero-top .tools b{font-weight:700;color:#f4f3f4}
+  .hero-top .mail{
+    justify-self:end;min-width:0;
+    font-size:.52rem;letter-spacing:.04em;
+    overflow-wrap:anywhere;
+  }
+  .hero-top a{text-decoration:none}
+  .hero-top a:hover{color:var(--accent)}
+
+  /* axe central : convoyeur d'images + texte fixe */
+  .hero-center{
+    position:relative;
+    isolation:isolate;   /* la fusion ne déborde pas sur le reste de la page */
+    flex:1;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    padding:clamp(24px,5vh,56px) 0 clamp(44px,9vh,108px);
+    text-align:center;
+  }
+
+  /* images qui avancent lentement en boucle */
+  .conveyor{
+    position:absolute;inset:0;
+    overflow:hidden;
+    z-index:1;pointer-events:none;
+  }
+  .tile{
+    --tw:clamp(88px,9.5vw,136px);
+    /* compense l'écart entre les marges haute et basse de la zone centrale */
+    --lift:calc((clamp(44px,9vh,108px) - clamp(24px,5vh,56px)) / 2 - 4vh);
+    position:absolute;left:50%;top:calc(50% - var(--lift));
+    width:var(--tw);
+    /* la tuile est centrée sur son point d'ancrage, pas suspendue en dessous */
+    margin:0 0 0 calc(var(--tw) / -2);
+    translate:0 -50%;
+    animation:drift linear infinite;
+    will-change:transform,opacity;
+  }
+  .tile img{
+    display:block;width:100%;height:auto;
+    filter:brightness(.95);
+  }
+  @keyframes drift{
+    0%   { transform:translate(var(--x0),var(--y0)) scale(var(--s0)); opacity:0 }
+    10%  { opacity:.9 }
+    85%  { opacity:.9 }
+    100% { transform:translate(var(--x1),var(--y1)) scale(var(--s1)); opacity:0 }
+  }
+
+  /* nom et description, au-dessus du convoyeur */
+  .wordmark{
+    position:relative;z-index:10;
+    mix-blend-mode:difference;
+    margin:0;
+    display:flex;flex-direction:column;align-items:center;
+    gap:.8em;
+    font-size:clamp(.82rem,1.5vw,1.22rem);
+    pointer-events:none;
+  }
+  .wordmark .inner{
+    display:inline-flex;white-space:nowrap;
+    font-size:1em;font-weight:500;letter-spacing:.34em;
+    text-transform:uppercase;color:#f4f3f4;
+    padding-left:.34em;
+  }
+  .wordmark .inner.sub{font-size:.6em;color:#8a898b}
+
+  .statement{
+    position:relative;z-index:10;
+    mix-blend-mode:difference;
+    margin:clamp(28px,5.5vh,62px) 0 0;
+    max-width:min(36ch,88vw);
+    font-size:.6rem;font-weight:500;line-height:1.6;
+    letter-spacing:.03em;text-transform:uppercase;
+    color:#b9b8ba;
+  }
+
+  /* indicateur de défilement vers les travaux */
+  .scroll-cue{
+    align-self:center;
+    display:flex;flex-direction:column;align-items:center;gap:9px;
+    text-decoration:none;
+    font-size:.56rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);
+    transition:color .25s ease;
+  }
+  .scroll-cue:hover{color:var(--accent)}
+  .scroll-cue svg{
+    width:12px;height:24px;
+    stroke:currentColor;fill:none;stroke-width:1.2;
+    animation:cue 2.2s ease-in-out infinite;
+  }
+  @keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* ---------- Technical rail, right edge ---------- */
+  .rail{
+    position:fixed;
+    right:clamp(18px,1.6vw,26px);
+    top:50%;transform:translateY(-50%);
+    z-index:12;
+    height:min(82vh,860px);
+    display:flex;flex-direction:column;align-items:flex-end;gap:14px;
+    opacity:0;pointer-events:none;
+    transition:opacity .45s ease;
+  }
+  .rail.on{opacity:1;pointer-events:auto}
+  .rail .track{position:relative;flex:1;width:52px}
+  .rail .track::after{
+    content:'';position:absolute;right:0;top:0;bottom:0;width:1px;
+    background:var(--line);transition:background-color .7s ease;
+  }
+  .rail .grad{position:absolute;right:0;top:0;bottom:0;width:7px}
+  .rail .grad i{
+    position:absolute;right:0;width:4px;height:1px;background:var(--line);
+    transition:background-color .7s ease;
+  }
+  .rail .node{
+    position:absolute;right:0;
+    display:flex;align-items:center;gap:7px;
+    transform:translateY(-50%);
+    background:none;border:0;padding:0;cursor:pointer;
+    font-family:inherit;font-size:.52rem;font-weight:700;letter-spacing:.04em;
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+    transition:color .35s ease;
+  }
+  .rail .node b{font-weight:500}
+  .rail .node em{
+    display:block;width:9px;height:1px;background:var(--faint);font-style:normal;
+    transition:width .35s cubic-bezier(.22,.7,.2,1),background-color .35s ease;
+  }
+  .rail .node:hover{color:var(--ink)}
+  .rail .node[aria-current="true"]{color:var(--ink)}
+  .rail .node[aria-current="true"] em{width:22px;background:var(--accent)}
+  .rail .head{
+    position:absolute;right:0;width:26px;height:2px;background:var(--accent);
+    transform:translateY(-1px);
+    transition:top .12s linear;
+  }
+  .rail .pct{
+    font-size:.52rem;font-weight:700;letter-spacing:.04em;color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- Client column ---------- */
+  .feed{
+    position:relative;z-index:2;padding:12vh 0 14vh;
+    scroll-snap-type:y proximity;
+  }
+  .item{
+    display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    align-items:center;gap:clamp(10px,2.4vw,30px);
+    padding:clamp(52px,11vh,132px) 0;
+    scroll-snap-align:center;
+    opacity:.6;
+    transition:opacity .6s ease;
+  }
+  .item.is-active{opacity:1}
+  .lbl{
+    font-size:.56rem;font-weight:700;color:var(--muted);
+    letter-spacing:.02em;text-transform:uppercase;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    transition:color .4s ease,font-size .55s cubic-bezier(.16,.84,.24,1),letter-spacing .55s ease;
+  }
+  .lbl.r{text-align:right}
+  .item.is-active .lbl{
+    color:var(--ink);
+    font-size:clamp(1.05rem,2.4vw,1.6rem);
+    font-weight:800;
+    letter-spacing:-.03em;
+  }
+  /* la discipline reste discrète : même corps qu'au repos, sans graisse */
+  .lbl.r{font-size:.52rem;font-weight:500;color:#b9b8ba}
+  .item.is-active .lbl.r{
+    font-size:.52rem;
+    font-weight:500;
+    letter-spacing:.02em;
+  }
+
+  .media{
+    position:relative;
+    width:clamp(180px,30vw,300px);height:clamp(56px,9vw,86px);
+    overflow:hidden;background:#8c8a8c;
+    transition:width .85s cubic-bezier(.16,.84,.24,1),height .85s cubic-bezier(.16,.84,.24,1);
+    cursor:pointer;
+  }
+  .item.is-active .media{width:clamp(220px,23vw,300px);height:clamp(391px,40.9vw,533px)}
+  .media video,.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .media .vim{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:100%;aspect-ratio:9/16;border:0;
+    opacity:0;transition:opacity .5s ease;pointer-events:none;
+  }
+  .item.is-active .media .vim{opacity:1}
+  .media video{opacity:0;transition:opacity .5s ease}
+  .item.is-active .media video{opacity:1}
+
+  /* ---------- Contact ---------- */
+  .contact{
+    position:relative;z-index:2;
+    min-height:calc(100svh - 74px);
+    display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(40px,7vh,80px) 0;
+  }
+  .contact h2{
+    font-size:clamp(1.6rem,4vw,3.4rem);font-weight:800;
+    letter-spacing:-.035em;line-height:1;text-transform:uppercase;
+    margin:0 0 .6em;max-width:17ch;
+  }
+  .mail{
+    align-self:flex-start;
+    font-size:clamp(1.2rem,3.4vw,2.4rem);font-weight:800;
+    letter-spacing:-.03em;text-transform:uppercase;text-decoration:none;
+    border-bottom:2px solid var(--accent);padding-bottom:.08em;
+  }
+  .mail:hover{color:var(--accent)}
+  .elsewhere{
+    margin-top:3rem;display:flex;flex-wrap:wrap;gap:1.6rem;
+    font-size:.56rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+  }
+  .elsewhere a{color:var(--muted);text-decoration:none}
+  .elsewhere a:hover{color:var(--ink)}
+  .foot{
+    position:relative;z-index:2;
+    font-size:.52rem;font-weight:500;color:#b9b8ba;letter-spacing:.02em;text-transform:uppercase;
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-bottom:34px;
+  }
+
+  @media (max-width:900px){ .rail{display:none} }
+  @media (max-width:860px){
+    /* tout s'empile et se centre, dans l'axe du nom et de la flèche */
+    .hero-top{grid-template-columns:minmax(0,1fr);row-gap:16px;justify-items:center;text-align:center}
+    .hero-top .mail{grid-column:1;justify-self:center}
+    .hero-top .tools{grid-column:1;max-width:42ch;text-align:center}
+    .hero-center{padding:clamp(20px,4vh,40px) 0 clamp(32px,7vh,72px)}
+  }
+  @media (max-width:540px){
+    .wordmark{font-size:.74rem;gap:.7em}
+    .tile{--tw:76px}
+    .statement{margin-top:clamp(22px,4.5vh,40px);font-size:.56rem;max-width:30ch}
+    .hero-top{font-size:.54rem}
+    .hero-top .tools,.hero-top .mail{font-size:.5rem}
+  }
+  @media (max-width:720px){
+    .item{grid-template-columns:1fr;justify-items:center;gap:6px}
+    .lbl{text-align:center;font-size:.54rem}
+    .lbl.r,.item.is-active .lbl.r{text-align:center;font-size:.5rem}
+    .item.is-active .lbl{font-size:1.05rem}
+    .media{width:min(74vw,300px);height:90px}
+    .item.is-active .media{width:min(74vw,300px);height:min(132vw,533px)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .scroll-cue svg{animation:none}
+    .tile{animation:none;opacity:.55}
+    .media,.item.is-active .media{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<header class="intro wrap">
+  <div class="hero-top">
+    <span>93130</span>
+    <ul class="tools" aria-label="Tools">
+      <li><b>Motion design</b></li>
+      <li><b>3D</b></li>
+      <li><b>AI</b></li>
+    </ul>
+    <span class="mail"><a href="mailto:leoclemente25@gmail.com">leoclemente25@gmail.com</a></span>
+  </div>
+
+  <div class="hero-center">
+    <div class="conveyor" id="conveyor" aria-hidden="true"></div>
+
+    <h1 class="wordmark">
+      <span class="inner">Leo Clemente</span>
+      <span class="inner sub">Motion design</span>
+    </h1>
+
+    <p class="statement">Creating social media content for brands — from motion graphics to 3D, handled end to end.</p>
+  </div>
+
+  <a class="scroll-cue" href="#work" aria-label="Scroll down to the work">
+    <span>Work</span>
+    <svg viewBox="0 0 12 24" aria-hidden="true"><path d="M6 0v22M1 17l5 5 5-5"/></svg>
+  </a>
+</header>
+
+<div class="sep wrap" id="work"><span>Clients</span><span>01 — 05</span></div>
+
+<!-- Technical rail -->
+<aside class="rail" id="rail" aria-label="Progress">
+  <div class="track" id="track">
+    <div class="grad" id="grad"></div>
+    <span class="head" id="head"></span>
+  </div>
+  <span class="pct" id="pct">000</span>
+</aside>
+
+<main class="feed wrap" id="feed"></main>
+
+<div class="sep wrap"><span>Contact</span><span>Paris</span></div>
+
+<footer class="contact wrap">
+  <h2>A project, a format, a deadline — get in touch.</h2>
+  <a class="mail" href="mailto:leoclemente25@gmail.com">leoclemente25@gmail.com</a>
+  <div class="elsewhere">
+    <a href="https://www.linkedin.com/in/leo-clemente-706942205" target="_blank" rel="noopener">LinkedIn</a><a href="cv-leo-clemente.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+  </div>
+</footer>
+<div class="foot wrap"><span>Available for freelance</span><span id="year"></span></div>
+
+<script>
+/* ---- Content: replace with the real details ---- */
+/* To serve a video from Vimeo, add vimeo:'ID' to its line.
+   Without that field the local file videos/<id>.mp4 is used.
+   Example: { id:'Aigle', vimeo:'987654321', ... }
+   Vimeo's background mode (bare player, no logo, no controls)
+   requires a paid Vimeo plan — on a free account the controls stay visible. */
+const CLIENTS = [
+  { id:'LorealParis', name:"L'Oréal Paris", cat:'Motion graphics, 3D, sound design', theme:'light' },
+  { id:'Decath',      name:'Decathlon',     cat:'Motion graphics, 3D',               theme:'dark'  },
+  { id:'Aigle',       name:'Aigle',         cat:'Motion graphics, 3D, sound design', theme:'light' },
+  { id:'Delpeyrat',   name:'Delpeyrat',     cat:'Motion graphics',                   theme:'dark'  },
+  { id:'Others',      name:'More work',     cat:'Allianz, Citeo, Netto and more',    theme:'light' }
+];
+
+const USE_VIMEO = CLIENTS.some(c=>c.vimeo);
+if(USE_VIMEO){
+  const sdk=document.createElement('script');
+  sdk.src='https://player.vimeo.com/api/player.js';
+  document.head.appendChild(sdk);
+}
+
+const feed=document.getElementById('feed'), rail=document.getElementById('rail'),
+      track=document.getElementById('track'), grad=document.getElementById('grad'),
+      head=document.getElementById('head'), pct=document.getElementById('pct');
+let active=-1;
+
+// fine graduations along the rail
+for(let k=0;k<=60;k++){
+  const i=document.createElement('i');
+  i.style.top=(k/60*100)+'%';
+  i.style.width=(k%5===0?'7px':'3px');
+  grad.appendChild(i);
+}
+
+CLIENTS.forEach((c,i)=>{
+  const row=document.createElement('article');
+  row.className='item';
+  row.innerHTML=
+    '<span class="lbl">'+c.name+'</span>'+
+    '<div class="media" role="button" tabindex="0" aria-label="'+c.name+'">'+
+      '<img src="posters/'+c.id+'.jpg" alt="">'+
+      (c.vimeo?'':'<video src="videos/'+c.id+'.mp4" muted loop playsinline preload="none"></video>')+
+    '</div>'+
+    '<span class="lbl r">'+c.cat+'</span>';
+  feed.appendChild(row);
+  c.row=row; c.media=row.querySelector('.media'); c.video=row.querySelector('video');
+
+  const jump=()=>c.media.scrollIntoView({behavior:'smooth',block:'center'});
+  c.media.addEventListener('click',jump);
+  c.media.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();jump();} });
+
+  // matching node on the rail
+  const n=document.createElement('button');
+  n.type='button'; n.className='node';
+  n.style.top=(CLIENTS.length===1?50:(i/(CLIENTS.length-1))*100)+'%';
+  n.innerHTML='<b>'+String(i+1).padStart(2,'0')+'</b><em></em>';
+  n.setAttribute('aria-label',c.name);
+  n.addEventListener('click',jump);
+  track.appendChild(n);
+  c.node=n;
+
+  c.progress=0;
+  if(c.video){
+    c.video.addEventListener('timeupdate',()=>{
+      c.progress=c.video.duration?c.video.currentTime/c.video.duration:0;
+      if(active===i) paint();
+    });
+  }
+});
+
+/* build the Vimeo player on first activation, not before */
+function mountVimeo(c,i){
+  if(c.player||!window.Vimeo) return;
+  const frame=document.createElement('iframe');
+  frame.className='vim';
+  frame.src='https://player.vimeo.com/video/'+c.vimeo+
+            '?background=1&autopause=0&muted=1&loop=1&dnt=1';
+  frame.allow='autoplay';
+  frame.setAttribute('tabindex','-1');
+  c.media.appendChild(frame);
+  c.player=new Vimeo.Player(frame);
+  c.player.setVolume(0);
+  c.player.on('timeupdate',d=>{ c.progress=d.percent||0; if(active===i) paint(); });
+}
+
+function playMedia(c,i){
+  if(c.vimeo){
+    if(!c.player){
+      if(window.Vimeo) mountVimeo(c,i);
+      else { setTimeout(()=>{ mountVimeo(c,i); if(active===i&&c.player) c.player.play().catch(()=>{}); },400); return; }
+    }
+    c.player.play().catch(()=>{});
+  } else {
+    if(c.video.preload==='none'){ c.video.preload='auto'; c.video.load(); }
+    c.video.play().catch(()=>{});
+  }
+}
+function pauseMedia(c){
+  if(c.vimeo){ if(c.player) c.player.pause().catch(()=>{}); }
+  else c.video.pause();
+}
+
+function paint(){
+  if(active<0) return;
+  const c=CLIENTS[active];
+  const p=c.progress||0;
+  const span=CLIENTS.length-1;
+  const pos=span?((active+p*0.999)/CLIENTS.length)*100*(CLIENTS.length/(CLIENTS.length)):0;
+  const y=span?((active+(p*0.999))/span)*100:50;
+  head.style.top=Math.min(100,y)+'%';
+  pct.textContent=String(Math.round(((active+p)/CLIENTS.length)*100)).padStart(3,'0');
+}
+
+function setActive(i){
+  if(i===active) return;
+  if(active>-1){
+    CLIENTS[active].row.classList.remove('is-active');
+    pauseMedia(CLIENTS[active]);
+    CLIENTS[active].node.setAttribute('aria-current','false');
+  }
+  active=i;
+  if(i<0){ rail.classList.remove('on'); return; }
+  const c=CLIENTS[i];
+  c.row.classList.add('is-active');
+  c.node.setAttribute('aria-current','true');
+  playMedia(c,i);
+  rail.classList.add('on');
+  paint();
+}
+
+let ticking=false;
+function measure(){
+  ticking=false;
+  const mid=innerHeight/2;
+  let best=-1,bestD=Infinity;
+  CLIENTS.forEach((c,i)=>{
+    const r=c.media.getBoundingClientRect();
+    const d=Math.abs(r.top+r.height/2-mid);
+    if(d<bestD){bestD=d;best=i;}
+  });
+  setActive(bestD<innerHeight*0.42?best:-1);
+}
+addEventListener('scroll',()=>{ if(!ticking){ticking=true;requestAnimationFrame(measure);} },{passive:true});
+addEventListener('resize',measure);
+measure();
+
+/* ---- Conveyor: work stills drift slowly across the hero, growing as they come ---- */
+(function(){
+  const host=document.getElementById('conveyor');
+  if(!host) return;
+
+  const STILLS=['01','02','03','04','05','06','07','08','09','10','11','12','13'];
+  // ordre mélangé : deux visuels voisins ne se suivent pas à l'écran
+  for(let i=STILLS.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [STILLS[i],STILLS[j]]=[STILLS[j],STILLS[i]];
+  }
+  const COUNT=innerWidth<720?7:13;
+  const rand=(a,b)=>a+Math.random()*(b-a);
+  // tirage resserré vers le centre : la moyenne de deux tirages concentre les valeurs
+  const centred=r=>(Math.random()+Math.random()-1)*r;
+
+  for(let i=0;i<COUNT;i++){
+    const t=document.createElement('div');
+    t.className='tile';
+
+    // trajectoire : de la droite vers la gauche, en légère diagonale
+    const dir=Math.random()<0.5?1:-1;          // sens de la dérive verticale
+    const y0=centred(22), y1=y0+dir*rand(4,11);
+    const dur=rand(26,46);
+
+    t.style.setProperty('--x0', rand(46,64)+'vw');
+    t.style.setProperty('--x1', -rand(46,64)+'vw');
+    t.style.setProperty('--y0', y0+'vh');
+    t.style.setProperty('--y1', y1+'vh');
+    t.style.setProperty('--s0', rand(.18,.32).toFixed(2));
+    t.style.setProperty('--s1', rand(1.0,1.5).toFixed(2));
+    t.style.animationDuration=dur+'s';
+    t.style.animationDelay=(-rand(0,dur))+'s';   // décalage négatif : la boucle est déjà en cours au chargement
+    t.style.zIndex=String(Math.round(rand(1,8)));
+
+    const img=document.createElement('img');
+    img.src='stills/'+STILLS[i%STILLS.length]+'.webp';
+    img.alt=''; img.loading='lazy'; img.decoding='async';
+    t.appendChild(img);
+
+    host.appendChild(t);
+  }
+})();
+
+document.getElementById('year').textContent='© '+new Date().getFullYear();
+</script></body></html>
